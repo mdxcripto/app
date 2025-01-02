@@ -1,8 +1,24 @@
 const express = require('express');
 const fs = require('fs');
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/34.30.62.207/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/34.30.62.207/fullchain.pem'),
+};
+
+https.createServer(options, app).listen(3000, () => {
+  console.log('Servidor HTTPS corriendo en el puerto 3000');
+});
+
+
 const path = require('path');
 const app = express();
 const port = 3000;
+const cors = require('cors');
+app.use(cors());
+
 
 // Ruta al archivo JSON donde guardamos la información
 const contenidoPath = path.join(__dirname, 'contenido.json');
